@@ -1,0 +1,956 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Chá de Bebê — José Miguel</title>
+  <meta name="description" content="Site-convite do Chá de Bebê do José Miguel Aguilar Caldeira — 14/02/2026 — Rua Uruguai, 545" />
+
+  <style>
+    :root{
+      /* 🎨 Paleta — Balão do José Miguel */
+      --sage: #9FB8A5;
+      --leaf: #7E9C8A;
+      --baby: #A9CFE3;
+      --denim: #8FB7CC;
+      --cream: #F3EFEA;
+      --bear: #8B6B4F;
+      --title: #6F543E;
+      --text: #6B6B6B;
+
+      --card: rgba(255,255,255,.85);
+      --shadow: 0 20px 60px rgba(0,0,0,.08);
+      --radius: 24px;
+      --radius-sm: 18px;
+    }
+
+    *{ box-sizing: border-box; margin: 0; padding: 0; }
+    html,body{ height: 100%; }
+    body{
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 15% 15%, rgba(169,207,227,.45), transparent 45%),
+        radial-gradient(circle at 85% 10%, rgba(159,184,165,.45), transparent 45%),
+        radial-gradient(circle at 50% 80%, rgba(243,239,234,.8), transparent 60%),
+        linear-gradient(180deg, #F9F7F4, #ffffff);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    a{ color: inherit; text-decoration: none; }
+    
+    /* ====== Animações suaves ====== */
+    @keyframes float {
+      0%, 100%{ transform: translateY(0) rotate(0deg); }
+      33%{ transform: translateY(-12px) rotate(2deg); }
+      66%{ transform: translateY(-6px) rotate(-2deg); }
+    }
+    
+    @keyframes pulse {
+      0%, 100%{ transform: scale(1); opacity: 1; }
+      50%{ transform: scale(1.05); opacity: 0.9; }
+    }
+    
+    @keyframes fadeIn {
+      from{ opacity: 0; transform: translateY(30px); }
+      to{ opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes shimmer {
+      0%{ background-position: -200% center; }
+      100%{ background-position: 200% center; }
+    }
+    
+    @keyframes bounce {
+      0%, 100%{ transform: translateY(0); }
+      50%{ transform: translateY(-8px); }
+    }
+    
+    @keyframes heartbeat {
+      0%, 100%{ transform: scale(1); }
+      10%, 30%{ transform: scale(1.1); }
+      20%, 40%{ transform: scale(1); }
+    }
+
+    /* ====== Decorações flutuantes ====== */
+    .decorations{
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+    
+    .balloon{
+      position: absolute;
+      width: 80px;
+      height: 100px;
+      border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+      opacity: 0.3;
+      animation: float 8s ease-in-out infinite;
+    }
+    
+    .balloon::after{
+      content: '';
+      position: absolute;
+      bottom: -30px;
+      left: 50%;
+      width: 2px;
+      height: 30px;
+      background: currentColor;
+      transform: translateX(-50%);
+    }
+    
+    .balloon.b1{ background: var(--baby); top: 10%; left: 5%; animation-delay: 0s; }
+    .balloon.b2{ background: var(--sage); top: 60%; left: 90%; animation-delay: -2s; width: 60px; height: 75px; }
+    .balloon.b3{ background: var(--denim); top: 35%; right: 8%; animation-delay: -4s; }
+    .balloon.b4{ background: var(--leaf); bottom: 15%; left: 12%; animation-delay: -6s; width: 70px; height: 88px; }
+    
+    .cloud{
+      position: absolute;
+      background: rgba(255,255,255,.4);
+      border-radius: 100px;
+      opacity: 0.5;
+    }
+    
+    .cloud::before,
+    .cloud::after{
+      content: '';
+      position: absolute;
+      background: rgba(255,255,255,.4);
+      border-radius: 100px;
+    }
+    
+    .cloud.c1{ 
+      width: 120px; height: 40px; 
+      top: 8%; right: 15%;
+      animation: float 12s ease-in-out infinite;
+    }
+    .cloud.c1::before{ width: 50px; height: 50px; top: -25px; left: 10px; }
+    .cloud.c1::after{ width: 60px; height: 60px; top: -30px; right: 15px; }
+    
+    .cloud.c2{ 
+      width: 100px; height: 35px; 
+      bottom: 20%; left: 8%;
+      animation: float 15s ease-in-out infinite;
+      animation-delay: -5s;
+    }
+    .cloud.c2::before{ width: 40px; height: 40px; top: -20px; left: 15px; }
+    .cloud.c2::after{ width: 50px; height: 50px; top: -25px; right: 10px; }
+
+    /* ====== Container principal ====== */
+    .wrap{
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 40px 20px 80px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ====== Header ====== */
+    header{
+      text-align: center;
+      padding: 20px 0 40px;
+      animation: fadeIn 1s ease-out;
+    }
+
+    .tag{
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 20px;
+      border-radius: 999px;
+      background: rgba(169,207,227,.25);
+      border: 2px solid rgba(143,183,204,.4);
+      color: var(--denim);
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: .3px;
+      backdrop-filter: blur(12px);
+      margin-bottom: 24px;
+      animation: bounce 2s ease-in-out infinite;
+    }
+    
+    .tag-dot{
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--baby);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    h1{
+      font-size: clamp(32px, 5vw, 52px);
+      line-height: 1.1;
+      color: var(--title);
+      letter-spacing: -0.8px;
+      margin-bottom: 16px;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--title), var(--leaf));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    
+    .subtitle{
+      max-width: 680px;
+      margin: 0 auto;
+      font-size: 18px;
+      line-height: 1.7;
+      color: var(--text);
+      opacity: 0;
+      animation: fadeIn 1s ease-out 0.3s forwards;
+    }
+
+    /* ====== Hero visual ====== */
+    .hero-visual{
+      text-align: center;
+      margin: 40px 0;
+      opacity: 0;
+      animation: fadeIn 1s ease-out 0.6s forwards;
+    }
+    
+    .baby-name{
+      display: inline-block;
+      font-size: clamp(40px, 6vw, 72px);
+      font-weight: 900;
+      color: var(--baby);
+      text-shadow: 0 4px 20px rgba(169,207,227,.4);
+      letter-spacing: -1.5px;
+      line-height: 1;
+      margin: 20px 0;
+      animation: heartbeat 2s ease-in-out infinite;
+    }
+    
+    .baby-emoji{
+      font-size: clamp(60px, 8vw, 96px);
+      display: block;
+      margin-bottom: 10px;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    /* ====== Layout em grid ====== */
+    main{
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      margin-top: 40px;
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    @media (max-width: 900px){
+      main{ grid-template-columns: 1fr; }
+    }
+
+    .card{
+      background: var(--card);
+      border: 2px solid rgba(159,184,165,.2);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 40px;
+      backdrop-filter: blur(15px);
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .card:hover{
+      transform: translateY(-4px);
+      box-shadow: 0 25px 70px rgba(0,0,0,.12);
+    }
+    
+    .card::before{
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.3), transparent);
+      transition: left 0.5s ease;
+    }
+    
+    .card:hover::before{
+      left: 100%;
+    }
+
+    .card.left{ animation: fadeIn 0.8s ease-out; }
+    .card.right{ animation: fadeIn 0.8s ease-out 0.2s backwards; }
+
+    /* ====== Seções ====== */
+    .section-header{
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 28px;
+      margin-top: 0;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
+    
+    .section-icon{
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--baby), var(--denim));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      line-height: 1;
+      box-shadow: 0 8px 24px rgba(169,207,227,.35);
+      flex-shrink: 0;
+    }
+    
+    .section-title{
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--bear);
+      text-transform: uppercase;
+      letter-spacing: .8px;
+      line-height: 1.2;
+    }
+
+    .content h2{
+      font-size: 28px;
+      color: var(--bear);
+      margin-bottom: 18px;
+      letter-spacing: -0.4px;
+      line-height: 1.25;
+      font-weight: 700;
+    }
+    
+    .content p{
+      margin-bottom: 18px;
+      line-height: 1.75;
+      color: var(--text);
+      font-size: 17px;
+    }
+    
+    .content strong{
+      color: var(--bear);
+      font-weight: 700;
+    }
+    
+    /* Seções internas - agora padronizadas como cards independentes */
+    .info-section,
+    .presents-section {
+      background: var(--card);
+      border: 2px solid rgba(159,184,165,.2);
+      border-radius: var(--radius);
+      padding: 30px;
+      margin-bottom: 24px;
+      backdrop-filter: blur(15px);
+      box-shadow: var(--shadow);
+      transition: all 0.3s ease;
+    }
+    
+    .info-section:hover,
+    .presents-section:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 25px 70px rgba(0,0,0,.12);
+    }
+    
+    .final-message{
+      margin: 24px 0 0;
+      padding: 24px;
+      background: rgba(169,207,227,.08);
+      border-radius: 14px;
+      border-left: 4px solid var(--baby);
+      border: 2px solid rgba(159,184,165,.2);
+      box-shadow: 0 4px 16px rgba(0,0,0,.05);
+    }
+
+    .divider{
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(159,184,165,.25), transparent);
+      margin: 40px 0;
+    }
+
+    /* ====== Info boxes ====== */
+    .info-grid{
+      display: grid;
+      gap: 14px;
+      margin: 28px 0 0 0;
+    }
+    
+    .info-item{
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      padding: 22px 24px;
+      border-radius: var(--radius-sm);
+      background: rgba(255,255,255,.5);
+      border: 2px solid rgba(159,184,165,.2);
+      transition: all 0.3s ease;
+    }
+    
+    .info-item:hover{
+      transform: translateX(6px);
+      border-color: var(--sage);
+      background: rgba(255,255,255,.7);
+      box-shadow: 0 6px 20px rgba(159,184,165,.15);
+    }
+    
+    .info-icon{
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--sage), var(--leaf));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      line-height: 1;
+      flex-shrink: 0;
+      box-shadow: 0 6px 16px rgba(126,156,138,.25);
+    }
+    
+    .info-content{
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    
+    .info-content b{
+      display: block;
+      color: var(--bear);
+      font-size: 17px;
+      margin-bottom: 3px;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+    
+    .info-content div{
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    /* ====== Presente box ====== */
+    .present-box{
+      padding: 28px;
+      border-radius: var(--radius-sm);
+      background: rgba(255,255,255,.5);
+      border: 2px solid rgba(159,184,165,.2);
+      position: relative;
+      overflow: hidden;
+      margin: 24px 0 0 0;
+      box-shadow: 0 4px 16px rgba(159,184,165,.1);
+    }
+    
+    .present-box::before{
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(255,255,255,.3) 50%,
+        transparent 100%
+      );
+      background-size: 200% 100%;
+      animation: shimmer 3s linear infinite;
+    }
+    
+    .present-box .content{
+      position: relative;
+      z-index: 1;
+    }
+    
+    .present-intro{
+      margin-bottom: 16px;
+      line-height: 1.75;
+    }
+    
+    .diaper-grid{
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+    
+    .diaper-option{
+      padding: 20px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.7);
+      border: 2px solid var(--sage);
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+    
+    .diaper-option:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(159,184,165,.2);
+      border-color: var(--leaf);
+    }
+    
+    .diaper-icon{
+      font-size: 36px;
+      display: block;
+      margin-bottom: 8px;
+    }
+    
+    .diaper-size{
+      font-weight: 800;
+      font-size: 20px;
+      color: var(--bear);
+      display: block;
+      margin-bottom: 4px;
+    }
+    
+    .diaper-label{
+      font-size: 14px;
+      color: var(--text);
+    }
+    
+    .location-container{
+      margin-top: 20px;
+      padding: 20px;
+      border-radius: 14px;
+      background: rgba(169,207,227,.12);
+      border: 2px solid var(--baby);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    
+    .location-icon{
+      font-size: 24px;
+      flex-shrink: 0;
+    }
+    
+    .location-content{
+      flex: 1;
+    }
+    
+    .location-label{
+      font-weight: 700;
+      color: var(--bear);
+      margin-bottom: 4px;
+      font-size: 15px;
+    }
+    
+    .location-link{
+      color: var(--denim);
+      text-decoration: underline;
+      font-size: 15px;
+      transition: color 0.3s ease;
+    }
+    
+    .location-link:hover{
+      color: var(--baby);
+    }
+    
+    .pix-box{
+      margin-top: 20px;
+      padding: 24px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.7);
+      border: 2px solid var(--sage);
+    }
+    
+    .pix-label{
+      font-weight: 700;
+      color: var(--bear);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 16px;
+    }
+    
+    .pix-key{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 18px 20px;
+      border-radius: 14px;
+      background: var(--cream);
+      border: 2px solid rgba(159,184,165,.2);
+      flex-wrap: wrap;
+    }
+    
+    .pix-key code{
+      font-family: ui-monospace, monospace;
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--bear);
+      letter-spacing: .5px;
+      flex: 1;
+      min-width: 0;
+    }
+    
+    .copy-btn{
+      padding: 12px 20px;
+      border-radius: 12px;
+      border: none;
+      background: linear-gradient(135deg, var(--baby), var(--denim));
+      color: #244152;
+      font-weight: 800;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      white-space: nowrap;
+      box-shadow: 0 4px 12px rgba(143,183,204,.3);
+      flex-shrink: 0;
+    }
+    
+    .copy-btn:hover{
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(143,183,204,.4);
+    }
+    
+    .copy-btn:active{
+      transform: translateY(0);
+    }
+    
+    .toast{
+      display: none;
+      margin-top: 12px;
+      padding: 14px 18px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--sage), var(--leaf));
+      color: white;
+      font-weight: 700;
+      text-align: center;
+      animation: fadeIn 0.3s ease-out;
+    }
+    
+    .toast.show{
+      display: block;
+    }
+
+    /* ====== Botões CTA ====== */
+    .cta-group{
+      display: grid;
+      gap: 14px;
+      margin: 32px 0;
+    }
+    
+    .btn{
+      padding: 18px 28px;
+      border-radius: 16px;
+      font-weight: 800;
+      font-size: 16px;
+      letter-spacing: .3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: none;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .btn::before{
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.3), transparent);
+      transform: translateX(-100%);
+      transition: transform 0.6s ease;
+    }
+    
+    .btn:hover::before{
+      transform: translateX(100%);
+    }
+    
+    .btn-primary{
+      background: linear-gradient(135deg, var(--baby), var(--denim));
+      color: #244152;
+      box-shadow: 0 12px 32px rgba(143,183,204,.4);
+      animation: pulse 3s ease-in-out infinite;
+    }
+    
+    .btn-primary:hover{
+      transform: translateY(-4px);
+      box-shadow: 0 16px 40px rgba(143,183,204,.5);
+    }
+    
+    .btn-secondary{
+      background: rgba(159,184,165,.2);
+      border: 2px solid var(--sage);
+      color: var(--leaf);
+    }
+    
+    .btn-secondary:hover{
+      background: rgba(159,184,165,.3);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(159,184,165,.3);
+    }
+    
+    .btn:active{
+      transform: translateY(0) !important;
+    }
+
+    /* ====== Footer ====== */
+    footer{
+      text-align: center;
+      margin-top: 40px;
+      padding: 32px 20px;
+      color: var(--text);
+    }
+    
+    .footer-message{
+      font-size: 15px;
+      line-height: 1.8;
+      max-width: 600px;
+      margin: 0 auto 20px;
+    }
+    
+    .footer-signature{
+      font-weight: 700;
+      color: var(--title);
+      font-size: 16px;
+    }
+
+    /* ====== Responsividade ====== */
+    @media (max-width: 600px){
+      .wrap{ padding: 24px 16px 60px; }
+      .card{ padding: 28px 20px; }
+      .info-section, 
+      .presents-section { padding: 20px 16px; }
+      h1{ font-size: 28px; }
+      .subtitle{ font-size: 16px; }
+      .baby-name{ font-size: 36px; }
+      .baby-emoji{ font-size: 56px; }
+      .section-icon{ width: 48px; height: 48px; font-size: 24px; }
+      .section-title{ font-size: 18px; }
+      .info-icon{ width: 48px; height: 48px; font-size: 22px; }
+      .pix-key{ flex-direction: column; align-items: stretch; }
+      .copy-btn{ width: 100%; }
+      .diaper-grid{ grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Decorações de fundo -->
+  <div class="decorations" aria-hidden="true">
+    <div class="balloon b1"></div>
+    <div class="balloon b2"></div>
+    <div class="balloon b3"></div>
+    <div class="balloon b4"></div>
+    <div class="cloud c1"></div>
+    <div class="cloud c2"></div>
+  </div>
+
+  <div class="wrap">
+    <header>
+      <div class="tag">
+        <span class="tag-dot"></span>
+        <span>Convite com carinho • Chá de Bebê</span>
+      </div>
+
+      <h1>Chá de Bebê do José Miguel</h1>
+      <p class="subtitle">
+        José Miguel está a caminho… e queremos celebrar esse momento tão especial com você.
+      </p>
+    </header>
+
+    <!-- Hero visual -->
+    <div class="hero-visual">
+      <span class="baby-emoji">👶🏻</span>
+      <div class="baby-name">José Miguel</div>
+    </div>
+
+    <main>
+      <!-- Coluna esquerda - História -->
+      <section class="card left">
+        <div class="section-header">
+          <div class="section-icon">✨</div>
+          <div class="section-title">Nossa História</div>
+        </div>
+
+        <div class="content">
+          <h2>Um sonho que está chegando…</h2>
+          
+          <p>
+            Depois de tanto esperar, nosso maior desejo está a caminho.
+            <strong>José Miguel</strong> já mora em nossos corações e transforma cada dia em esperança, amor e gratidão.
+          </p>
+
+          <p>
+            Queremos dividir com nossos amigos e familiares mais especiais a alegria de preparar a chegada do nosso bebê.
+            Sua presença vai tornar este momento ainda mais inesquecível e cheio de carinho 💙
+          </p>
+
+          <div class="cta-group">
+            <a class="btn btn-primary" href="https://wa.me/message/WLOPLPGDGBMVI1" id="btn-whats" role="button">
+              💬 Confirmar presença pelo WhatsApp
+            </a>
+            <button class="btn btn-secondary" id="btn-presentes" type="button">
+              🎁 Ver opções de presentes
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Coluna direita - Informações -->
+      <aside class="card right">
+        <div class="info-section">
+          <div class="section-header">
+            <div class="section-icon">📅</div>
+            <div class="section-title">Informações do Evento</div>
+          </div>
+
+          <div class="info-grid">
+            <div class="info-item">
+              <div class="info-icon">🗓</div>
+              <div class="info-content">
+                <b>Data</b>
+                <div>14 / 02 / 2026</div>
+              </div>
+            </div>
+
+            <div class="info-item">
+              <div class="info-icon">⏰</div>
+              <div class="info-content">
+                <b>Horário</b>
+                <div>17h</div>
+              </div>
+            </div>
+
+            <div class="info-item">
+              <div class="info-icon">📍</div>
+              <div class="info-content">
+                <b>Local</b>
+                <div>Rua Uruguai, 545</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Container de Localização -->
+          <div class="location-container">
+            <span class="location-icon">📍</span>
+            <div class="location-content">
+              <div class="location-label">Como chegar</div>
+              <a href="#" class="https://maps.app.goo.gl/cUs1Y8kFJhZcGz9v5" target="_blank" rel="noopener noreferrer">Ver no Google Maps</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="presents-section">
+          <div class="section-header">
+            <div class="section-icon">🎁</div>
+            <div class="section-title">Presentes</div>
+          </div>
+
+          <div class="content">
+            <p>
+              Se desejar presentear, as <strong>fraldas nos tamanhos M e G</strong> serão muito bem-vindas e recebidas com todo carinho para o José Miguel 🤍
+            </p>
+          </div>
+
+          <!-- Grid de Fraldas -->
+          <div class="diaper-grid">
+            <div class="diaper-option">
+              <span class="diaper-icon">👶</span>
+              <span class="diaper-size">Tamanho M</span>
+              <span class="diaper-label">Fraldas</span>
+            </div>
+            <div class="diaper-option">
+              <span class="diaper-icon">🍼</span>
+              <span class="diaper-size">Tamanho G</span>
+              <span class="diaper-label">Fraldas</span>
+            </div>
+          </div>
+
+          <div class="present-box" id="presente-box">
+            <div class="content">
+              <p class="present-intro">
+                <strong>Vaquinha / PIX</strong><br/>
+                Também aceitamos contribuições para o enxoval.
+                Qualquer valor é bem-vindo!
+              </p>
+
+              <div class="pix-box">
+                <div class="pix-label">
+                  <span>🔑</span>
+                  <span>Chave PIX</span>
+                </div>
+                
+                <div class="pix-key">
+                  <code id="pixKey">67999444558</code>
+                  <button class="copy-btn" id="copyBtn" type="button">Copiar</button>
+                </div>
+
+                <div class="toast" id="toast">
+                  ✅ Chave PIX copiada com sucesso!
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="content">
+          <p class="final-message">
+            <strong>💙 Mensagem Final</strong><br/>
+            Agradecemos desde já por todo carinho, amor e boas energias. Esperamos você para celebrar a chegada do nosso menino!
+          </p>
+        </div>
+      </aside>
+    </main>
+
+    <footer>
+      <div class="footer-message">
+        Com amor e gratidão,
+      </div>
+      <div class="footer-signature">
+        Papai Rafae e Mamãe Barbarha
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // Scroll suave para presentes
+    document.getElementById('btn-presentes').addEventListener('click', () => {
+      document.getElementById('presente-box').scrollIntoView({ 
+        behavior: 'smooth', 
+        block: 'center' 
+      });
+    });
+
+    // Copiar PIX com feedback
+    const pixKey = document.getElementById('pixKey').textContent.trim();
+    const copyBtn = document.getElementById('copyBtn');
+    const toast = document.getElementById('toast');
+    let toastTimer = null;
+
+    copyBtn.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(pixKey);
+      } catch {
+        // Fallback para navegadores antigos
+        const textarea = document.createElement('textarea');
+        textarea.value = pixKey;
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+      }
+
+      // Mostrar toast
+      toast.classList.add('show');
+      copyBtn.textContent = '✅ Copiado!';
+      
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.remove('show');
+        copyBtn.textContent = 'Copiar';
+      }, 2000);
+    });
+  </script>
+</body>
+</html>
